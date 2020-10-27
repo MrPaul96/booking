@@ -13,25 +13,6 @@ import java.util.List;
 public class BookingController {
     private List<HotelBooking> bookings;
 
-    private static final List<Point> points = createPoints();
-
-    private static List<Point> createPoints() {
-
-        List<Point> result = new ArrayList<>();
-        result.add(new Point(-4, -8));
-        result.add(new Point(-2, 9));
-        result.add(new Point(-1, -8));
-        result.add(new Point(0, -7));
-        result.add(new Point(1, 1));
-        result.add(new Point(2, 3));
-        result.add(new Point(2, 3));
-        result.add(new Point(2, -2));
-        result.add(new Point(4, -1));
-
-        return result;
-    }
-
-
     public BookingController() {
         bookings = new ArrayList<>();
         bookings.add(new HotelBooking("User1", 200.40, 3));
