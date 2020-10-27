@@ -1,12 +1,11 @@
 package com.booking;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("booking")
@@ -25,15 +24,22 @@ public class BookingController {
         return "Hello";
     }
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @GetMapping(value = "/all")
     public List<HotelBooking> getAll() {
         return this.bookings;
     }
 
-    @RequestMapping(value = "/getRevenues", method = RequestMethod.GET)
+    @GetMapping(value = "/revenues")
     public Double getRevenues() {
-        // bookings.forEach(booking => System.out.print(p.hotelName));
+        return bookings.stream()
+                .mapToDouble(booking -> booking.getPricePerNight())
+                .reduce(0, (x1, x2) -> x1 + x2);
+    }
 
-        return 1.0;
+    @GetMapping(value = "bookings/{numberOfNights")
+    public List<HotelBooking> getBookingsByNumberOfNights(@PathVariable("numberOfNights") int numberOfNights) {
+        return bookings.stream()
+                .filter(booking -> booking.getNumberOfNights() == numberOfNights)
+                .collect(Collectors.toList());
     }
 }
